@@ -105,10 +105,10 @@ function handleClick(e) {
 
   if (mode === 1) {
     computerMove();
-  } else {
-    currentPlayer = 2;
-    setStatus("Player 2's turn", 2);
-  }
+} else {
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+    setStatus(`Player ${currentPlayer}'s turn`, currentPlayer);
+}
 }
 
 cells.forEach(cell => cell.addEventListener('click', handleClick));
