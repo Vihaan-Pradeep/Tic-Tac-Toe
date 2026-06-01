@@ -104,7 +104,7 @@ function handleClick(e) {
   }
 
   if (mode === 1) {
-    computerMove();
+    setTimeout(computerMove, 500);
 } else {
     currentPlayer = currentPlayer === 1 ? 2 : 1;
     setStatus(`Player ${currentPlayer}'s turn`, currentPlayer);
