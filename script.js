@@ -60,14 +60,31 @@ function endGame(result) {
     setStatus("It's a tie");
   } else {
     result.combo.forEach(i => cells[i].classList.add('win-cell'));
-    const name = result.winner === 'X' ? 'Player 1' : 'Player 2';
+    const name = result.winner === 'X' ? 'Player 1' : (mode === 1 ? 'Computer' : 'Player 2');
     overlayTx.textContent = `${name} wins`;
     setStatus(`${name} wins`);
   }
 
   overlay.classList.remove('hidden');
 }
+function computerMove() {
+  const empty = board
+    .map((val, i) => val === null ? i : null)
+    .filter(i => i !== null);
 
+  const index = empty[Math.floor(Math.random() * empty.length)];
+
+  board[index] = 'O';
+  cells[index].textContent = 'O';
+  cells[index].setAttribute('data-symbol', 'O');
+  cells[index].disabled = true;
+
+  const result = checkWinner();
+  if (result) { endGame(result); return; }
+
+  currentPlayer = 1;
+  setStatus("Player 1's turn", 1);
+}
 function handleClick(e) {
   const cell = e.currentTarget;
   const index = parseInt(cell.dataset.index);
@@ -86,8 +103,12 @@ function handleClick(e) {
     return;
   }
 
-  currentPlayer = currentPlayer === 1 ? 2 : 1;
-  setStatus(`Player ${currentPlayer}'s turn`, currentPlayer);
+  if (mode === 1) {
+    computerMove();
+  } else {
+    currentPlayer = 2;
+    setStatus("Player 2's turn", 2);
+  }
 }
 
 cells.forEach(cell => cell.addEventListener('click', handleClick));
