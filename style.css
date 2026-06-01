@@ -64,9 +64,9 @@ body {
 .board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+  gap: 1px;
   border: 1px solid var(--border);
-  background: var(--border);
+  background: #333);
 }
 
 .cell {
